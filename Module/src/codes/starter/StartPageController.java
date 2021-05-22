@@ -8,34 +8,32 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Stack;
 
 public class StartPageController {
     public AnchorPane anchorPane;
+    private Stage stage;
 
     public void phase1Selection(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/phaseOne.fxml")));
-        Stage stage = (Stage) anchorPane.getScene().getWindow();
-        stage.close();
-        stage.setTitle("choose phase");
-        stage.setScene(new Scene(root));
-        stage.show();
+        closeStage();
+        loadPhase("phaseOne");
     }
 
     public void phase2Selection(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/phaseTwo.fxml")));
+        closeStage();
+        loadPhase("phaseTwo");
     }
-    private void closeStage(){
-        Stage stage = (Stage) anchorPane.getScene().getWindow();
+
+    private void closeStage() {
+        stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
     }
-//    private void loadPhase(String phase) throws IOException {
-//        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/" + phase + ".fxml")));
-//        Stage stage;
-//        stage.setTitle("choose phase");
-//        stage.setScene(new Scene(root));
-//        stage.show();
-//    }
+
+    private void loadPhase(String phase) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/" + phase + ".fxml")));
+        stage.setTitle(phase);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
 
 
 }

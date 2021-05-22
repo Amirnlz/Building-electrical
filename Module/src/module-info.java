@@ -3,6 +3,6 @@ module Module {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
-    opens codes;
     opens codes.starter;
+    opens codes.phases;
 }
