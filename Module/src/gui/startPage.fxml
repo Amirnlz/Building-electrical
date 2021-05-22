@@ -5,12 +5,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="229.0" prefWidth="465.0" style="-fx-background-color: #fcbf49;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codes.StartPageController">
-   <Button layoutX="117.0" layoutY="132.0" mnemonicParsing="false" style="-fx-background-color: White; -fx-background-radius: 10pt;" text="Phase 1">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="229.0" prefWidth="465.0" style="-fx-background-color: #fcbf49;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codes.starter.StartPageController">
+   <Button layoutX="117.0" layoutY="132.0" mnemonicParsing="false" onAction="#phase1Selection" style="-fx-background-color: White; -fx-background-radius: 10pt;" text="Phase 1">
       <font>
          <Font name="Vazir Bold" size="13.0" />
       </font></Button>
-   <Button layoutX="273.0" layoutY="132.0" mnemonicParsing="false" style="-fx-background-color: White; -fx-background-radius: 10pt;" text="Phase 2">
+   <Button layoutX="273.0" layoutY="132.0" mnemonicParsing="false" onAction="#phase2Selection" style="-fx-background-color: White; -fx-background-radius: 10pt;" text="Phase 2">
       <font>
          <Font name="Vazir Bold" size="13.0" />
       </font></Button>

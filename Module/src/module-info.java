@@ -4,4 +4,5 @@ module Module {
     requires javafx.fxml;
     requires java.desktop;
     opens codes;
+    opens codes.starter;
 }
