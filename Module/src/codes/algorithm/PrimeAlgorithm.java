@@ -1,8 +1,8 @@
-package sample;
+package codes.algorithm;
 
 import java.io.File;
 
-public class PrimeAlghorithm {
+public class PrimeAlgorithm {
 
     public File Prime(File file){
         return null;

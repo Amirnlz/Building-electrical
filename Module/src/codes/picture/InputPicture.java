@@ -1,4 +1,4 @@
-package sample;
+package codes.picture;
 
 import java.io.File;
 

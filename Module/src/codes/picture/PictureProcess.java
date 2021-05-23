@@ -1,4 +1,4 @@
-package sample;
+package codes.picture;
 
 import java.io.File;
 
@@ -19,19 +19,19 @@ public class PictureProcess {
         return  null;
     }
 
-    public void detecteWalls(){
+    public void detectWalls(){
 
     }
 
-    public void detecteSwitch(){
+    public void detectSwitch(){
 
     }
 
-    public void detecteSource(){
+    public void detectSource(){
 
     }
 
-    public void detecteJunctionBox(){
+    public void detectJunctionBox(){
 
     }
     public int calculatePixels(){
