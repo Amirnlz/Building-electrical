@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="codes.phases.PhaseTwo"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane fx:id="anchorPane" prefHeight="283.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="codes.phases.PhaseTwo">
+   <TextField fx:id="inputAddress" layoutX="89.0" layoutY="141.0" prefHeight="24.0" prefWidth="202.0" />
+   <Label layoutX="89.0" layoutY="113.0" text="Enter address:" />
+   <Button fx:id="BrowseButton" layoutX="305.0" layoutY="141.0" mnemonicParsing="false" onAction="#selectedFile" text="Browse" />
+   <Button fx:id="nextButton" layoutX="184.0" layoutY="226.0" mnemonicParsing="false" onAction="#goToFinalPage" text="Next" />
 </AnchorPane>

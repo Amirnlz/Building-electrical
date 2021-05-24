@@ -44,14 +44,9 @@ public class Graph {
         return null;
     }
 
-
-    private boolean isCompleteGraph() {
+    public boolean isCompleteGraph() {
         int conditionOfComplete = vertices * (vertices - 1) / 2;
         return conditionOfComplete == getNumberOfEdge();
-    }
-
-    private void setWeight() {
-
     }
 
     //    should return a graph complete it later
