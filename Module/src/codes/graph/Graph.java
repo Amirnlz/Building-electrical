@@ -1,15 +1,17 @@
 package codes.graph;
 
+import codes.picture.Picture;
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class Graph {
 
-    private File file;
     private final int vertices;
     private final LinkedList<Edge>[] adjacencyList;
+    private Picture picture;
 
-    Graph(int vertices) {
+    private Graph(int vertices) {
         this.vertices = vertices;
         adjacencyList = new LinkedList[vertices];
         for (int i = 0; i < vertices; i++) {
@@ -32,15 +34,15 @@ public class Graph {
         return adjacencyList;
     }
 
-    private File getFile() {
-        return file;
+    public Picture getPicture() {
+        return picture;
     }
 
-    private void setFile(File file) {
-        this.file = file;
+    public void setPicture(Picture picture) {
+        this.picture = picture;
     }
 
-    private File pictureToGraph() {
+    private Graph pictureToGraph() {
         return null;
     }
 
@@ -58,12 +60,17 @@ public class Graph {
     }
 
     // should return graph
-    private File getFinalGraph() {
+    private Picture getFinalGraph() {
         return null;
     }
 
-    private File drawGraph() {
-        return null;
+    //show filtered graph for gui
+    private File drawGraph() throws IOException {
+        File myFile = new File("H:\\myPic.jpg");
+        if (!myFile.exists())
+            myFile.createNewFile();
+        this.picture.save(myFile);
+        return myFile;
     }
 
     public void printGraph() {
