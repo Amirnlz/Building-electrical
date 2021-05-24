@@ -25,7 +25,7 @@ public class PhaseTwo {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose Photo");
         Stage stage = (Stage) anchorPane.getScene().getWindow();
-        File selectedPhoto = (File) fileChooser.showOpenMultipleDialog(stage);
+        File selectedPhoto = fileChooser.showOpenDialog(stage);
         if (selectedPhoto != null)
             fileAddress = selectedPhoto.getAbsolutePath();
     }
