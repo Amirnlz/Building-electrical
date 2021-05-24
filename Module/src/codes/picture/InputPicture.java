@@ -7,8 +7,11 @@ public class InputPicture {
     File file;
 
 
-    public File getFile() {
-        return file;
+
+    public Picture getFile() {
+
+        Picture pic=new Picture(this.file);
+        return pic;
     }
 
     public void setFile(File file) {

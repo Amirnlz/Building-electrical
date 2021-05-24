@@ -1,17 +1,25 @@
 package codes.graph;
 
+import codes.picture.Picture;
+
 import java.io.File;
+import java.io.IOException;
 
 public class Graph {
 
-    File file;
+   // File file;
+    Picture picture;
 
-    private File getFile() {
-        return file;
+    public Graph(Picture picture) {
+        this.picture = picture;
     }
 
-    private void setFile(File file) {
-        this.file = file;
+    public Picture getPicture() {
+        return picture;
+    }
+
+    public void setPicture(Picture picture) {
+        this.picture = picture;
     }
 
     private File pictureToGraph(){
@@ -42,11 +50,17 @@ public class Graph {
     }
 
 // should return graph
-    private File getFinalGraph(){
+    private Picture getFinalGraph(){
         return  null;
     }
 
-    private File drawGraph(){
-        return null;
+    //show filtered graph for gui
+    private File drawGraph() throws IOException {
+
+        File myFile=new File("H:\\myPic.jpg");
+        if(!myFile.exists())
+            myFile.createNewFile();
+       this.picture.save(myFile);
+       return myFile;
     }
 }
