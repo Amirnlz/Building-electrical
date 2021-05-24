@@ -8,6 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="lib" level="application" />
+<<<<<<< HEAD
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -19,5 +20,9 @@
         </SOURCES>
       </library>
     </orderEntry>
+=======
+    <orderEntry type="library" name="stdlib" level="project" />
+    <orderEntry type="library" name="stdlib (2)" level="project" />
+>>>>>>> 3442343aca7cca834a663f21c02b2145f71f21ee
   </component>
 </module>

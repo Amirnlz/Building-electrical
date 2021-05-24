@@ -5,4 +5,5 @@ module Module {
     requires java.desktop;
     opens codes.starter;
     opens codes.phases;
+    opens codes.result;
 }
