@@ -51,8 +51,6 @@ public class Graph {
 
     //    should return a graph complete it later
     private void findOptimizedGraph() {
-//        PrimeAlgorithm getPrime=new PrimeAlgorithm();
-//        return getPrime.Prime(this.file);
     }
 
     private void filterGraph() {
