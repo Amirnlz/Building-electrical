@@ -1,5 +1,7 @@
 package codes.phases;
 
+import codes.graph.GraphGenerate;
+import codes.picture.InputPicture;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,8 +28,14 @@ public class PhaseTwo {
         fileChooser.setTitle("Choose Photo");
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         File selectedPhoto = fileChooser.showOpenDialog(stage);
-        if (selectedPhoto != null)
+        if (selectedPhoto != null){
             fileAddress = selectedPhoto.getAbsolutePath();
+
+            InputPicture in=new InputPicture(fileAddress);
+            GraphGenerate graphGenerate=new GraphGenerate();
+            graphGenerate.filterGraph(in.getFile()) .show();
+        }
+
     }
 
     public void goToFinalPage(ActionEvent actionEvent) throws IOException {

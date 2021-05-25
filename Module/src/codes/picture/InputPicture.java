@@ -14,9 +14,8 @@ public class InputPicture {
 
     }
 
-    public Picture getFile() {
-        Picture pic=new Picture(this.file);
-        return pic;
+    public File getFile() {
+      return  this.file;
     }
 
     public void setFile(File file) {
