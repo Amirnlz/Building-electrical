@@ -30,22 +30,29 @@ public class PhaseTwo {
         File selectedPhoto = fileChooser.showOpenDialog(stage);
         if (selectedPhoto != null){
             fileAddress = selectedPhoto.getAbsolutePath();
-
-            InputPicture in=new InputPicture(fileAddress);
-            GraphGenerate graphGenerate=new GraphGenerate();
-            graphGenerate.filterGraph(in.getFile()) .show();
+            setFileAddress(fileAddress);
         }
-
     }
 
     public void goToFinalPage(ActionEvent actionEvent) throws IOException {
-        fileAddress = (fileAddress == null ? inputAddress.getText() : fileAddress);
+        if (fileAddress == null)
+            setFileAddress(inputAddress.getText());
+        graphProcess(fileAddress);
         closeStage();
         loadPhase();
     }
 
+    public void setFileAddress(String fileAddress) {
+        this.fileAddress = fileAddress;
+    }
+
     public String getFileAddress(){
         return fileAddress;
+    }
+    private void graphProcess(String address){
+        InputPicture in=new InputPicture(address);
+        GraphGenerate graphGenerate=new GraphGenerate();
+        graphGenerate.filterGraph(in.getFile()) .show();
     }
 
     private void closeStage() {
