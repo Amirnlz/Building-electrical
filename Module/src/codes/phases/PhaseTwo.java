@@ -39,7 +39,7 @@ public class PhaseTwo {
             setFileAddress(inputAddress.getText());
         graphProcess(fileAddress);
         closeStage();
-        loadPhase();
+        loadPage();
     }
 
     public void setFileAddress(String fileAddress) {
@@ -49,10 +49,11 @@ public class PhaseTwo {
     public String getFileAddress(){
         return fileAddress;
     }
+
     private void graphProcess(String address){
-        InputPicture in=new InputPicture(address);
-        GraphGenerate graphGenerate=new GraphGenerate();
-        graphGenerate.filterGraph(in.getFile()) .show();
+//        InputPicture in=new InputPicture(address);
+//        GraphGenerate graphGenerate=new GraphGenerate();
+//        graphGenerate.filterGraph(in.getFile()) .show();
     }
 
     private void closeStage() {
@@ -60,7 +61,7 @@ public class PhaseTwo {
         stage.close();
     }
 
-    private void loadPhase() throws IOException {
+    private void loadPage() throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/finalPage.fxml")));
         stage.setTitle("Result graph");
         stage.setScene(new Scene(root));

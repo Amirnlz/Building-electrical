@@ -11,7 +11,7 @@ public class Graph {
     private final LinkedList<Edge>[] adjacencyList;
     private Picture picture;
 
-    private Graph(int vertices) {
+    public Graph(int vertices) {
         this.vertices = vertices;
         adjacencyList = new LinkedList[vertices];
         for (int i = 0; i < vertices; i++) {
