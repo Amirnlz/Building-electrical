@@ -2,6 +2,7 @@ package codes.phases;
 
 import codes.graph.GraphGenerate;
 import codes.picture.InputPicture;
+import codes.picture.PictureProcess;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,6 +33,8 @@ public class PhaseTwo {
             fileAddress = selectedPhoto.getAbsolutePath();
             setFileAddress(fileAddress);
         }
+
+        graphProcess(fileAddress);
     }
 
     public void goToFinalPage(ActionEvent actionEvent) throws IOException {
@@ -51,9 +54,11 @@ public class PhaseTwo {
     }
 
     private void graphProcess(String address){
-//        InputPicture in=new InputPicture(address);
-//        GraphGenerate graphGenerate=new GraphGenerate();
-//        graphGenerate.filterGraph(in.getFile()) .show();
+          InputPicture in=new InputPicture(address);
+        PictureProcess pictureProcess=new PictureProcess();
+        pictureProcess.setFile(in.getFile());
+        pictureProcess.removeNoises();
+        pictureProcess.justShowSourcePlace();
     }
 
     private void closeStage() {
