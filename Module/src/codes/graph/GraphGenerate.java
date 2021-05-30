@@ -4,23 +4,31 @@ import java.util.Random;
 
 public class GraphGenerate {
 
-    private final int junctionBoxNum;
-    private final int switchNum;
-    private final int vertexNum;
+    private int junctionBoxNum;
+    private int switchNum;
+    private int vertexNum;
+    private Graph graph;
 
-    public GraphGenerate() {
+    public void createGraph() {
+        Graph generatedGraph;
+        do {
+            generateNumbers();
+            generatedGraph = new Graph(vertexNum);
+            linkVertices(generatedGraph);
+            setGraph(generatedGraph);
+        } while (generatedGraph.isCompleteGraph());
+    }
+
+    private void generateNumbers() {
         this.vertexNum = generateVerticesNum();
         this.junctionBoxNum = generateJunctionNum();
         this.switchNum = getSwitchNum();
     }
 
-    public void createGraph() {
-        Graph graph = new Graph(vertexNum);
-        do {
-            linkJunctionToSource(graph);
-            linkSwitchesToJunction(graph);
-            linkSwitchesToEach(graph);
-        } while (graph.isCompleteGraph());
+    private void linkVertices(Graph graph) {
+        linkJunctionToSource(graph);
+        linkSwitchesToJunction(graph);
+        linkSwitchesToEach(graph);
     }
 
     private void linkJunctionToSource(Graph graph) {
@@ -41,11 +49,12 @@ public class GraphGenerate {
             }
         }
     }
-    private void linkSwitchesToEach(Graph graph){
-        int keySource = junctionBoxNum+1;
-        for (int i = 0; i <switchNum ; i++) {
+
+    private void linkSwitchesToEach(Graph graph) {
+        int keySource = junctionBoxNum + 1;
+        for (int i = 0; i < switchNum; i++) {
             int weight = randomWeight();
-            graph.addEdge(keySource,keySource+i,weight);
+            graph.addEdge(keySource, keySource + i, weight);
         }
     }
 
@@ -77,6 +86,14 @@ public class GraphGenerate {
 
     public int getSwitchNum() {
         return vertexNum - junctionBoxNum - 1;
+    }
+
+    public Graph getGraph() {
+        return graph;
+    }
+
+    public void setGraph(Graph graph) {
+        this.graph = graph;
     }
 
     private int randomWeight() {

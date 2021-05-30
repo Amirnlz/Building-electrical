@@ -1,6 +1,8 @@
 package codes.phases;
 
+import codes.graph.Graph;
 import codes.graph.GraphGenerate;
+import codes.result.ResultGraph;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.Objects;
 
@@ -23,10 +24,12 @@ public class PhaseOne {
     public Label switchNumLabel;
     public Label sourceLabel;
     private Stage stage;
+    private Graph graph;
 
     public void graphGenerate(ActionEvent actionEvent) {
         GraphGenerate generate = new GraphGenerate();
         generate.createGraph();
+        this.graph = generate.getGraph();
         int vertexNum = generate.getVertexNum();
         int junctionNum = generate.getJunctionBoxNum();
         int switchNum = generate.getSwitchNum();
@@ -44,6 +47,11 @@ public class PhaseOne {
     public void nextPage(ActionEvent actionEvent) throws IOException {
         closeStage();
         loadPage();
+        sendGraph(graph);
+    }
+    private void sendGraph(Graph graph){
+        ResultGraph res = new ResultGraph();
+        res.setGraph(graph);
     }
 
     private void closeStage() {
