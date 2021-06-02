@@ -13,6 +13,7 @@ public class PictureProcess {
 
 
 
+
     public File getFile() {
         return file;
     }
@@ -37,14 +38,9 @@ public class PictureProcess {
             for(int j=0;j<height/divide;j++){
 
                 filtered.setRGB(i,j,-1);
-                int rgb=0;//save average of origin picture pixels
 
                 //minimizing origin picture and get average
-                for(int k=i*divide;k<(i+1)*divide;k++){
-                    for(int h=j*divide;h<(j+1)*divide;h++){
-                        rgb+=picture.getRGB(k,h);
-                    }
-                }
+                int rgb= average(i,j,divide,picture);
 
                 minimized.setRGB(i,j,rgb/divided);
                 //check if pixels are black then copy to filtered graph
@@ -52,15 +48,32 @@ public class PictureProcess {
                     filtered.setRGB(i,j,-16777216);
 
                 //copy filtered picture into origin picture and return to primary size
-                for(int k=i*divide;k<(i+1)*divide;k++){
-                    for(int h=j*divide;h<(j+1)*divide;h++){
-                        picture.setRGB(k,h,filtered.getRGB(i,j));
-                    }
-                }
+                backToOriginSize(i,j,divide,picture,filtered);
+
             }
         }
 
         return picture;
+    }
+
+    private void backToOriginSize(int i, int j, int divide, Picture picture,Picture filtered) {
+
+        for(int k=i*divide;k<(i+1)*divide;k++){
+            for(int h=j*divide;h<(j+1)*divide;h++){
+                picture.setRGB(k,h,filtered.getRGB(i,j));
+            }
+        }
+    }
+
+    private int average(int i, int j, int divide,Picture picture) {
+
+        int temp=0;
+        for(int k=i*divide;k<(i+1)*divide;k++){
+            for(int h=j*divide;h<(j+1)*divide;h++){
+                temp+=picture.getRGB(k,h);
+            }
+        }
+        return temp;
     }
 
     public void detectWalls(){
@@ -77,6 +90,8 @@ public class PictureProcess {
 
     public void detectJunctionBox(){
 
+
+
     }
     public int calculatePixels(){
         return 0;
@@ -88,7 +103,7 @@ public class PictureProcess {
 
         Picture picture=removeNoises();
 
-        int[]test= findWeight(picture,minRecWidth,maxRecWidth,sourceCross);
+        int[]test= findWeight(picture);
 
         //for showing source place in picture with blue color
         picture.setRGB(test[1],test[0],255);
@@ -100,39 +115,36 @@ public class PictureProcess {
     }
 
 
-    public int[] findWeight(Picture pic,int minWidth,int maxWidth,int cross){
+    public int[] findWeight(Picture pic){
 
-        int sum=0,temp=0;
+
+        int temp=0;
         boolean isRectangle=false;
 
         for(int i=0;i<pic.height();i++){
             for(int j=0;j<pic.width();j++){
                     if(pic.getRGB(j,i)==BLACK_CODE){
                         temp++;
-                        if((temp>=minWidth&&temp<=maxWidth)){//check width of black pixels is arrive to 60px or not
-
-                            isRectangle=Recognize(temp,i,j,cross,pic);
-                            if(!isRectangle)
-                                temp-=mines;
-                            else{
-                                int holder[]=new int[2];
-                                holder[0]=i;holder[1]=j;
-                                return holder;
-                            }
+                        if ((temp >= minRecWidth && temp <= maxRecWidth)) {//check width of black pixels is arrive to 60px or not
+                            isRectangle = Recognize(i,j,temp,pic);
+                            if (!isRectangle)
+                                temp -= mines;
+                            else
+                                return getPoint(i, j);
                         }
                 }
-                else{
+                else
                     temp=0;
-                }
             }
         }
         return null;
     }
 
 
-    private boolean Recognize(int temp, int i, int j,int cross,Picture pic) {
+    private boolean Recognize( int i, int j,int temp,Picture pic) {
 
-        for(int k=i;k<i+cross;k++){
+
+        for(int k=i;k<i+sourceCross;k++){
             for(int h=j;h>j-temp;h--){
                 if(k>=pic.height()||h<0)
                     return  false;
@@ -146,6 +158,16 @@ public class PictureProcess {
         }
         return true;
     }
+
+
+    private int[] getPoint(int i,int j){
+        int holder[]=new int[2];
+        holder[0]=i;holder[1]=j;
+        return holder;
+    }
+
+
+
 }
 
 
