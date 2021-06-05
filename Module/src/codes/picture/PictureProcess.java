@@ -1,6 +1,8 @@
 package codes.picture;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PictureProcess {
 
@@ -10,6 +12,16 @@ public class PictureProcess {
     private final int RED_CODE = 16711680;
     private final int GREEN_CODE = 65280;
     private final int YELLOW_CODE = 16776960;
+    private final List<int[]> objectsLocation=new ArrayList<>();
+
+
+    //this method just for test
+    public void justShowSourcePlace() {
+        Picture picture = removeNoises();
+        picture = extendPicture(20, picture);
+        findObjects(picture);
+        picture.show();
+    }
 
     public Picture removeNoises() {
         Picture picture = new Picture(this.file);
@@ -38,14 +50,6 @@ public class PictureProcess {
         return picture;
     }
 
-    private void backToOriginSize(int i, int j, int divide, Picture picture, Picture filtered) {
-        for (int k = i * divide; k < (i + 1) * divide; k++) {
-            for (int h = j * divide; h < (j + 1) * divide; h++) {
-                picture.setRGB(k, h, filtered.getRGB(i, j));
-            }
-        }
-    }
-
     private int average(int i, int j, int divide, Picture picture) {
         int temp = 0;
         for (int k = i * divide; k < (i + 1) * divide; k++) {
@@ -56,12 +60,31 @@ public class PictureProcess {
         return temp;
     }
 
-    //this method just for test
-    public void justShowSourcePlace() {
-        Picture picture = removeNoises();
-        picture = extendPicture(20, picture);
-        findObjects(picture);
-        picture.show();
+    private void backToOriginSize(int i, int j, int divide, Picture picture, Picture filtered) {
+        for (int k = i * divide; k < (i + 1) * divide; k++) {
+            for (int h = j * divide; h < (j + 1) * divide; h++) {
+                picture.setRGB(k, h, filtered.getRGB(i, j));
+            }
+        }
+    }
+
+    private Picture extendPicture(int extendNumber, Picture picture) {
+        Picture extendedPicture = new Picture(picture.width() + extendNumber, picture.height() + extendNumber);
+        fillWhite(extendedPicture);
+        for (int i = 0; i < picture.height(); i++) {
+            for (int j = 0; j < picture.width(); j++) {
+                extendedPicture.setRGB(j + (extendNumber / 2), i + (extendNumber / 2), picture.getRGB(j, i));
+            }
+        }
+        return extendedPicture;
+    }
+
+    private void fillWhite(Picture picture) {
+        for (int i = 0; i < picture.height(); i++) {
+            for (int j = 0; j < picture.width(); j++) {
+                picture.setRGB(j, i, -1);
+            }
+        }
     }
 
     public void findObjects(Picture pic) {
@@ -94,6 +117,20 @@ public class PictureProcess {
         }
     }
 
+    private boolean isSource(int y, int x, Picture picture) {
+        if (y + 43 <= picture.height() && x + 63 <= picture.width()) {
+            for (int i = y; i < y + 43; i++) {
+                for (int j = x; j < x + 63; j++) {
+                    if (picture.getRGB(j, i) != BLACK_CODE) {
+                        return false;
+                    }
+                }
+            }
+        } else
+            return y + 43 <= picture.height() && x + 63 <= picture.width();
+        return true;
+    }
+
     private void findKeys(int i, int j, Picture pic) {
         if (isKey(i, j, pic)) {
             if (i - 10 >= 0 && j - 10 >= 0) {
@@ -116,50 +153,24 @@ public class PictureProcess {
         }
     }
 
+    private boolean isKey(int y, int x, Picture picture) {
+        int size = 42;
+        if (y + size <= picture.height() && x + size <= picture.width()) {
+            for (int i = y; i < y + size; i++) {
+                for (int j = x; j < x + size; j++) {
+                    if (picture.getRGB(j, i) != BLACK_CODE) {
+                        return false;
+                    }
+                }
+            }
+        } else
+            return y + size <= picture.height() && x + size <= picture.width();
+        return true;
+    }
+
     private void findBoxes(int i, int j, Picture pic) {
         if (isBox(i, j, pic))
             showNode(i, j, pic, "box");
-    }
-
-    private void showNode(int y, int x, Picture picture, String flag) {
-        switch (flag) {
-            case "source":
-                showSource(x, y, picture);
-                break;
-            case "key":
-                showKey(x, y, picture);
-                break;
-            case "box":
-                showBox(x, y, picture);
-                break;
-        }
-    }
-
-    private void showSource(int x, int y, Picture picture) {
-        for (int i = y; i < y + 43; i++) {
-            for (int j = x; j < x + 60; j++) {
-                picture.setRGB(j, i, RED_CODE);
-                picture.show();
-            }
-        }
-    }
-
-    private void showKey(int x, int y, Picture picture) {
-        for (int i = y; i < y + 42; i++) {
-            for (int j = x; j < x + 42; j++) {
-                picture.setRGB(j, i, GREEN_CODE);
-                picture.show();
-            }
-        }
-    }
-
-    private void showBox(int x, int y, Picture picture) {
-        for (int i = y; i < y + 12; i++) {
-            for (int j = x; j < x + 12; j++) {
-                picture.setRGB(j, i, YELLOW_CODE);
-                picture.show();
-            }
-        }
     }
 
     private boolean isBox(int y, int x, Picture picture) {
@@ -193,68 +204,55 @@ public class PictureProcess {
         return true;
     }
 
-    private boolean isKey(int y, int x, Picture picture) {
-        int size = 42;
-        if (y + size <= picture.height() && x + size <= picture.width()) {
-            for (int i = y; i < y + size; i++) {
-                for (int j = x; j < x + size; j++) {
-                    if (picture.getRGB(j, i) != BLACK_CODE) {
-                        return false;
-                    }
-                }
-            }
-        } else
-            return y + size <= picture.height() && x + size <= picture.width();
-        return true;
+    private void showNode(int y, int x, Picture picture, String flag) {
+        switch (flag) {
+            case "source":
+                showSource(x, y, picture);
+                break;
+            case "key":
+                showKey(x, y, picture);
+                break;
+            case "box":
+                showBox(x, y, picture);
+                break;
+        }
     }
 
-    private boolean isSource(int y, int x, Picture picture) {
-        if (y + 43 <= picture.height() && x + 63 <= picture.width()) {
-            for (int i = y; i < y + 43; i++) {
-                for (int j = x; j < x + 63; j++) {
-                    if (picture.getRGB(j, i) != BLACK_CODE) {
-                        return false;
-                    }
-                }
-            }
-        } else
-            return y + 43 <= picture.height() && x + 63 <= picture.width();
-        return true;
-    }
-
-    private Picture extendPicture(int extendNumber, Picture picture) {
-        Picture extendedPicture = new Picture(picture.width() + extendNumber, picture.height() + extendNumber);
-        fillWhite(extendedPicture);
-        for (int i = 0; i < picture.height(); i++) {
-            for (int j = 0; j < picture.width(); j++) {
-                extendedPicture.setRGB(j + (extendNumber / 2), i + (extendNumber / 2), picture.getRGB(j, i));
+    private void showSource(int x, int y, Picture picture) {
+        insertToList(x,y);
+        for (int i = y; i < y + 43; i++) {
+            for (int j = x; j < x + 60; j++) {
+                picture.setRGB(j, i, RED_CODE);
+                picture.show();
             }
         }
-        return extendedPicture;
     }
 
-    private void fillWhite(Picture picture) {
-        for (int i = 0; i < picture.height(); i++) {
-            for (int j = 0; j < picture.width(); j++) {
-                picture.setRGB(j, i, -1);
+    private void showKey(int x, int y, Picture picture) {
+        insertToList(x,y);
+        for (int i = y; i < y + 42; i++) {
+            for (int j = x; j < x + 42; j++) {
+                picture.setRGB(j, i, GREEN_CODE);
+                picture.show();
             }
         }
+    }
+
+    private void showBox(int x, int y, Picture picture) {
+        insertToList(x,y);
+        for (int i = y; i < y + 12; i++) {
+            for (int j = x; j < x + 12; j++) {
+                picture.setRGB(j, i, YELLOW_CODE);
+                picture.show();
+            }
+        }
+    }
+
+    private void insertToList(int i, int j) {
+        objectsLocation.add(new int[]{i, j});
     }
 
     public void detectWalls(Picture picture) {
-
-    }
-
-    public void detectSwitch() {
-
-    }
-
-    public void detectSource() {
-
-    }
-
-    public void detectJunctionBox() {
-
 
     }
 
