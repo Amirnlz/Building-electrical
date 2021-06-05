@@ -32,6 +32,7 @@ public class PhaseTwo {
         if (selectedPhoto != null){
             fileAddress = selectedPhoto.getAbsolutePath();
             setFileAddress(fileAddress);
+            inputAddress.setText(fileAddress);
         }
 
         graphProcess(fileAddress);
