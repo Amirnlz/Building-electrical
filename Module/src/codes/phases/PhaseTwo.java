@@ -1,6 +1,5 @@
 package codes.phases;
 
-import codes.graph.GraphGenerate;
 import codes.picture.InputPicture;
 import codes.picture.PictureProcess;
 import javafx.event.ActionEvent;
@@ -68,7 +67,7 @@ public class PhaseTwo {
     }
 
     private void loadPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/finalPage.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/fxml/finalPage.fxml")));
         stage.setTitle("Result graph");
         stage.setScene(new Scene(root));
         stage.show();

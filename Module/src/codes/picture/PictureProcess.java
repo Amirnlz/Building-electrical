@@ -1,5 +1,6 @@
 package codes.picture;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +13,15 @@ public class PictureProcess {
     private final int RED_CODE = 16711680;
     private final int GREEN_CODE = 65280;
     private final int YELLOW_CODE = 16776960;
-    private final List<int[]> objectsLocation=new ArrayList<>();
-
+    private final List<int[]> objectsLocation = new ArrayList<>();
+    private JLabel label = new JLabel();
 
     //this method just for test
     public void justShowSourcePlace() {
         Picture picture = removeNoises();
         picture = extendPicture(20, picture);
         findObjects(picture);
+        label = picture.getJLabel();
         picture.show();
     }
 
@@ -219,7 +221,7 @@ public class PictureProcess {
     }
 
     private void showSource(int x, int y, Picture picture) {
-        insertToList(x,y);
+        insertToList(x, y);
         for (int i = y; i < y + 43; i++) {
             for (int j = x; j < x + 60; j++) {
                 picture.setRGB(j, i, RED_CODE);
@@ -229,7 +231,7 @@ public class PictureProcess {
     }
 
     private void showKey(int x, int y, Picture picture) {
-        insertToList(x,y);
+        insertToList(x, y);
         for (int i = y; i < y + 42; i++) {
             for (int j = x; j < x + 42; j++) {
                 picture.setRGB(j, i, GREEN_CODE);
@@ -239,7 +241,7 @@ public class PictureProcess {
     }
 
     private void showBox(int x, int y, Picture picture) {
-        insertToList(x,y);
+        insertToList(x, y);
         for (int i = y; i < y + 12; i++) {
             for (int j = x; j < x + 12; j++) {
                 picture.setRGB(j, i, YELLOW_CODE);
@@ -252,14 +254,6 @@ public class PictureProcess {
         objectsLocation.add(new int[]{i, j});
     }
 
-    public void detectWalls(Picture picture) {
-
-    }
-
-    public int calculatePixels() {
-        return 0;
-    }
-
     public File getFile() {
         return file;
     }
@@ -268,5 +262,8 @@ public class PictureProcess {
         this.file = file;
     }
 
+    public JLabel getLabel() {
+        return label;
+    }
 
 }

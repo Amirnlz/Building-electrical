@@ -1,92 +1,118 @@
 package codes.graph;
 
-import codes.picture.Picture;
-import java.io.File;
-import java.io.IOException;
-import java.util.LinkedList;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Graph {
+    private int count = 1;
+    private List<Node> nodes = new ArrayList<>();
+    private List<Edge> edges = new ArrayList<>();
 
-    private final int vertices;
-    private final LinkedList<Edge>[] adjacencyList;
-    private Picture picture;
+    private Node source;
+    private Node destination;
 
-    public Graph(int vertices) {
-        this.vertices = vertices;
-        adjacencyList = new LinkedList[vertices];
-        for (int i = 0; i < vertices; i++) {
-            adjacencyList[i] = new LinkedList<>();
+    private boolean solved = false;
+
+    public void setSolved(boolean solved) {
+        this.solved = solved;
+    }
+
+    public boolean isSolved() {
+        return solved;
+    }
+
+    public void setNodes(List<Node> nodes) {
+        this.nodes = nodes;
+    }
+
+    public List<Node> getNodes() {
+        return nodes;
+    }
+
+    public void setEdges(List<Edge> edges) {
+        this.edges = edges;
+    }
+
+    public List<Edge> getEdges() {
+        return edges;
+    }
+
+    public boolean isNodeReachable(Node node) {
+        for (Edge edge : edges)
+            if (node == edge.getNodeOne() || node == edge.getNodeTwo())
+                return true;
+
+        return false;
+    }
+
+    public void setSource(Node node) {
+        if (nodes.contains(node))
+            source = node;
+    }
+
+    public void setDestination(Node node) {
+        if (nodes.contains(node))
+            destination = node;
+    }
+
+    public Node getSource() {
+        return source;
+    }
+
+    public Node getDestination() {
+        return destination;
+    }
+
+    public boolean isSource(Node node) {
+        return node == source;
+    }
+
+    public boolean isDestination(Node node) {
+        return node == destination;
+    }
+
+    public void addNode(Point coord) {
+        Node node = new Node(coord);
+        addNode(node);
+    }
+
+    public void addNode(Node node) {
+        node.setId(count++);
+        nodes.add(node);
+        if (node.getId() == 1)
+            source = node;
+    }
+
+    public void addEdge(Edge new_edge) {
+        boolean added = false;
+        for (Edge edge : edges) {
+            if (edge.equals(new_edge)) {
+                added = true;
+                break;
+            }
         }
+        if (!added)
+            edges.add(new_edge);
     }
 
-    public void addEdge(int source, int destination, int weight) {
-        Edge edge = new Edge(source, destination, weight);
-        adjacencyList[source].add(edge);
-        edge = new Edge(destination, source, weight);
-        adjacencyList[destination].add(edge);
-    }
-
-    public int getVertices() {
-        return vertices;
-    }
-
-    public LinkedList<Edge>[] getAdjacencyList() {
-        return adjacencyList;
-    }
-
-    public Picture getPicture() {
-        return picture;
-    }
-
-    public void setPicture(Picture picture) {
-        this.picture = picture;
-    }
-
-    private Graph pictureToGraph() {
-        return null;
-    }
-
-    public boolean isCompleteGraph() {
-        int conditionOfComplete = vertices * (vertices - 1) / 2;
-        return conditionOfComplete == getNumberOfEdge();
-    }
-
-    //    should return a graph complete it later
-    private void findOptimizedGraph() {
-    }
-
-    private void filterGraph() {
-
-    }
-
-    // should return graph
-    private Picture getFinalGraph() {
-        return null;
-    }
-
-    //show filtered graph for gui
-    private File drawGraph() throws IOException {
-        File myFile = new File("H:\\myPic.jpg");
-        if (!myFile.exists())
-            myFile.createNewFile();
-        this.picture.save(myFile);
-        return myFile;
-    }
-
-    public void printGraph() {
-        for (int i = 0; i < vertices; i++) {
-            LinkedList<Edge> list = adjacencyList[i];
-            for (Edge edge : list)
-                System.out.println("vertex-" + i + " is connected to " +
-                        edge.destination + " with weight " + edge.weight);
+    public void deleteNode(Node node) {
+        List<Edge> delete = new ArrayList<>();
+        for (Edge edge : edges) {
+            if (edge.hasNode(node)) {
+                delete.add(edge);
+            }
         }
+        for (Edge edge : delete) {
+            edges.remove(edge);
+        }
+        nodes.remove(node);
     }
 
-    public int getNumberOfEdge() {
-        int sum = 0;
-        for (int i = 0; i < vertices; i++) {
-            sum += adjacencyList[i].size();
-        }
-        return sum / 2;
+    public void clear() {
+        count = 1;
+        nodes.clear();
+        edges.clear();
+        solved = false;
     }
 }

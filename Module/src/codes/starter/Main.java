@@ -15,17 +15,19 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/startPage.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/fxml/startPage.fxml")));
         setStarterStage(primaryStage);
         stage = primaryStage;
         primaryStage.setTitle("choose phase");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
-    public Stage getStarterStage(){
+
+    public Stage getStarterStage() {
         return stage;
     }
-    private void setStarterStage(Stage stage){
+
+    private void setStarterStage(Stage stage) {
         Main.stage = stage;
     }
 

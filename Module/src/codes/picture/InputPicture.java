@@ -6,19 +6,20 @@ public class InputPicture {
     File file;
 
     //get fileaddress and create file:
-    public InputPicture(String fileAddress){
-        this.file=new File(fileAddress);
+    public InputPicture(String fileAddress) {
+        this.file = new File(fileAddress);
     }
 
-    public InputPicture() {
-
+    public InputPicture(File file) {
+        this.file = file;
     }
 
     public File getFile() {
-      return  this.file;
+        return this.file;
     }
 
     public void setFile(File file) {
         this.file = file;
     }
+
 }

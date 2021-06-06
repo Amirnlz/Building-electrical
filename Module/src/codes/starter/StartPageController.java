@@ -1,5 +1,6 @@
 package codes.starter;
 
+import codes.phases.PhaseOne;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,12 +16,13 @@ public class StartPageController {
 
     public void phase1Selection(ActionEvent actionEvent) throws IOException {
         closeStage();
-        loadPhase("phaseOne");
+        PhaseOne phaseOne = new PhaseOne();
+        phaseOne.run();
     }
 
     public void phase2Selection(ActionEvent actionEvent) throws IOException {
         closeStage();
-        loadPhase("phaseTwo");
+        loadPhase();
     }
 
     private void closeStage() {
@@ -28,9 +30,9 @@ public class StartPageController {
         stage.close();
     }
 
-    private void loadPhase(String phase) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/" + phase + ".fxml")));
-        stage.setTitle(phase);
+    private void loadPhase() throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/fxml/phaseTwo.fxml")));
+        stage.setTitle("phaseTwo");
         stage.setScene(new Scene(root));
         stage.show();
     }
