@@ -21,7 +21,6 @@ public class PhaseTwo {
     public AnchorPane anchorPane;
     public Button nextButton;
     private String fileAddress;
-    private Stage stage;
 
     public void selectedFile(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();
@@ -33,8 +32,6 @@ public class PhaseTwo {
             setFileAddress(fileAddress);
             inputAddress.setText(fileAddress);
         }
-
-        graphProcess(fileAddress);
     }
 
     public void goToFinalPage(ActionEvent actionEvent) throws IOException {
@@ -42,7 +39,6 @@ public class PhaseTwo {
             setFileAddress(inputAddress.getText());
         graphProcess(fileAddress);
         closeStage();
-        loadPage();
     }
 
     public void setFileAddress(String fileAddress) {
@@ -58,18 +54,11 @@ public class PhaseTwo {
         PictureProcess pictureProcess=new PictureProcess();
         pictureProcess.setFile(in.getFile());
         pictureProcess.removeNoises();
-        pictureProcess.justShowSourcePlace();
+        pictureProcess.startProcess();
     }
 
     private void closeStage() {
-        stage = (Stage) anchorPane.getScene().getWindow();
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.close();
-    }
-
-    private void loadPage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/gui/fxml/finalPage.fxml")));
-        stage.setTitle("Result graph");
-        stage.setScene(new Scene(root));
-        stage.show();
     }
 }

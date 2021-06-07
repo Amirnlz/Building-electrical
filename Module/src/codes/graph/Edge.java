@@ -3,11 +3,17 @@ package codes.graph;
 public class Edge {
     private Node one;
     private Node two;
+    int source, dest;
     private int weight = 1;
 
     public Edge(Node one, Node two) {
         this.one = one;
         this.two = two;
+    }
+    public Edge(int source, int dest, int weight) {
+        this.source = source;
+        this.dest = dest;
+        this.weight = weight;
     }
 
     public Node getNodeOne() {
@@ -24,6 +30,13 @@ public class Edge {
 
     public int getWeight() {
         return weight;
+    }
+    public int getSource() {
+        return source;
+    }
+
+    public int getDest() {
+        return dest;
     }
 
     public boolean hasNode(Node node) {

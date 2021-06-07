@@ -8,11 +8,27 @@ public class Graph {
     private int count = 1;
     private List<Node> nodes = new ArrayList<>();
     private List<Edge> edges = new ArrayList<>();
-
+    List<List<Edge>> adjList = null;
     private Node source;
     private Node destination;
-
     private boolean solved = false;
+
+    public Graph(){
+
+    }
+
+    public Graph(List<Edge> edges, int N) {
+        adjList = new ArrayList<>();
+
+        for (int i = 0; i < N; i++) {
+            adjList.add(new ArrayList<>());
+        }
+
+        // add edges to the undirected graph
+        for (Edge edge : edges) {
+            adjList.get(edge.source).add(edge);
+        }
+    }
 
     public void setSolved(boolean solved) {
         this.solved = solved;
@@ -54,6 +70,10 @@ public class Graph {
     public void setDestination(Node node) {
         if (nodes.contains(node))
             destination = node;
+    }
+
+    public List<List<Edge>> getAdjList() {
+        return adjList;
     }
 
     public Node getSource() {

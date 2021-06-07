@@ -7,9 +7,15 @@ import java.util.List;
 public class Node {
     private Point coord = new Point();
     private int id;
+    int vertex, weight;
     private java.util.List<Node> path;
 
     public Node() {
+    }
+
+    public Node(int vertex, int weight) {
+        this.vertex = vertex;
+        this.weight = weight;
     }
 
     public Node(int id) {
@@ -51,6 +57,14 @@ public class Node {
     public int getId() {
         return id;
     }
+    public int getVertex() {
+        return vertex;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
 
     @Override
     public String toString() {

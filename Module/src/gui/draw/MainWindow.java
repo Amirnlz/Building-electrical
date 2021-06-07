@@ -31,23 +31,6 @@ public class MainWindow extends JPanel {
         graphPanel = new GraphPanel(graph);
         graphPanel.setPreferredSize(new Dimension(9000, 4096));
         graphPanel.setBackground(Color.WHITE);
-        if (JOptionPane.showConfirmDialog(graphPanel, "آیا می خواهید عملیات خود را از روی عکس انجام دهید؟","پیدا کردن کوتاه ترن مسیر", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_NO_OPTION){
-
-            File file = null;
-            JFileChooser fc = new JFileChooser();
-            int result = fc.showOpenDialog(null);
-            if (result == JFileChooser.APPROVE_OPTION) {
-                file = fc.getSelectedFile();
-            }
-            InputPicture in=new InputPicture(file);
-            PictureProcess pictureProcess=new PictureProcess();
-            pictureProcess.setFile(in.getFile());
-            pictureProcess.removeNoises();
-            pictureProcess.justShowSourcePlace();
-            label= pictureProcess.getLabel();
-            graphPanel.add(label);
-        }
-
         JScrollPane scroll = new JScrollPane();
         scroll.setViewportView(graphPanel);
         scroll.setPreferredSize(new Dimension(750, 500));
